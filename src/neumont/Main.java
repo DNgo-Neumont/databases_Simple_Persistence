@@ -3,12 +3,19 @@ package neumont;
 public class Main {
 
     public static void main(String[] args) {
-	// write your code here
+
+        String[] options = {"large","large serialized","long","long serialized","simple","simple serialized"};
+
+	int choice = ConsoleIO.promptForMenuSelection(options,true);
+
+	    if (choice > 0){
+
         FileReadWrite fileRead = new FileReadWrite();
 
-        fileRead.printPeopleDetails("C:\\Users\\dngo\\OneDrive - Neumont College of Computer Science\\Neumont\\Quarter 4\\DBT230\\people\\simple\\");
+        fileRead.printPeopleDetails("C:\\Users\\kwashington\\Desktop\\classroomAssignments\\First Year\\quarter 4\\Sprint 1\\databases II\\git\\Assignment 1 - data\\people\\simple\\" + options[choice-1]);
 
-        fileRead.deserializeFromFile("C:\\Users\\dngo\\OneDrive - Neumont College of Computer Science\\Neumont\\Quarter 4\\DBT230\\people\\simple\\");
+        fileRead.deserializeFromFile("C:\\Users\\kwashington\\Desktop\\classroomAssignments\\First Year\\quarter 4\\Sprint 1\\databases II\\git\\Assignment 1 - data\\people\\simple\\" + options[choice-1]);
+        }
 
     }
 }
