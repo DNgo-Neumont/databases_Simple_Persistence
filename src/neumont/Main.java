@@ -11,11 +11,12 @@ public class Main {
 
 	    if (choice > 0){
 
+        String pathWithChoice =path + "\\" + options[choice-1]+ "\\";
         FileReadWrite fileRead = new FileReadWrite();
 
-        fileRead.printPeopleDetails(path + "\\" + options[choice-1] + "\\");
+        fileRead.deserializeFromFile(pathWithChoice);
+        fileRead.printPeopleDetails(pathWithChoice);
 
-        fileRead.deserializeFromFile(path + "\\" + options[choice-1]+ "\\");
         }
 
     }
