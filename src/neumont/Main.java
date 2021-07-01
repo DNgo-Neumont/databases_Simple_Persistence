@@ -16,6 +16,7 @@ public class Main {
 
         fileRead.deserializeFromFile(pathWithChoice);
         fileRead.printPeopleDetails(pathWithChoice);
+        fileRead.deleteEmployeeFrom(11, pathWithChoice);
 
         }
 
