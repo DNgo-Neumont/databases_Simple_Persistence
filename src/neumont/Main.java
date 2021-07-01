@@ -4,9 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        String[] options = {"large","large serialized","long","long serialized","simple","simple serialized"};
+        String[] options = {"large","long","simple"};
 
-            String path = ConsoleIO.promptForString("input Path to folder: ");
+        String path = ConsoleIO.promptForString("input Path to folder: ");
 	int choice = ConsoleIO.promptForMenuSelection(options,true);
 
 	    if (choice > 0){
