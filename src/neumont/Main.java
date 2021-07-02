@@ -7,16 +7,19 @@ public class Main {
         String[] options = {"large","long","simple"};
 
         String path = ConsoleIO.promptForString("input Path to folder: ");
-	int choice = ConsoleIO.promptForMenuSelection(options,true);
+	    int choice = ConsoleIO.promptForMenuSelection(options,true);
 
 	    if (choice > 0){
 
         String pathWithChoice =path + "\\" + options[choice-1]+ "\\";
         FileReadWrite fileRead = new FileReadWrite();
+        employeeAddition employeeAdder = new employeeAddition();
 
         fileRead.deserializeFromFile(pathWithChoice);
         fileRead.printPeopleDetails(pathWithChoice);
         //fileRead.deleteEmployeeFrom(11, pathWithChoice); - Example
+        employeeAdder.addEmployee("Wanda", "Simmons", 1994, pathWithChoice);
+
 
         }
 

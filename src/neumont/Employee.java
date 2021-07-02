@@ -50,7 +50,7 @@ public class Employee {
 
         StringBuilder formatted = new StringBuilder();
 
-        formatted.append("Employee ID: ").append(id).append("\n").append("Employee First Name: ").append(firstName).append("\n").append("Employee Last Name: ").append(lastName).append("\n").append("Birthday: ").append(hireYear);
+        formatted.append("Employee ID: ").append(id).append("\n").append("Employee First Name: ").append(firstName).append("\n").append("Employee Last Name: ").append(lastName).append("\n").append("Hire Date: ").append(hireYear);
 
         return formatted.toString();
     }
