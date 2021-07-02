@@ -19,8 +19,9 @@ public class Main {
         fileRead.printPeopleDetails(pathWithChoice);
         //fileRead.deleteEmployeeFrom(11, pathWithChoice); - Example
         employeeAdder.addEmployee("Wanda", "Simmons", 1994, pathWithChoice);
+        employeeAdder.updateEmployee(10, "RANDALL", "MONTGOMERY", 2001, pathWithChoice);
 
-
+        fileRead.serializeAllEmployees(pathWithChoice);
         }
 
     }
