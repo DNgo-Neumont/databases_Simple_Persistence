@@ -22,6 +22,14 @@ public class Main {
         employeeAdder.updateEmployee(10, "RANDALL", "MONTGOMERY", 2001, pathWithChoice);
 
         fileRead.serializeAllEmployees(pathWithChoice);
+
+        if((fileRead.GetSerializedEmployee(15, pathWithChoice) != null)){
+           System.out.println(fileRead.GetSerializedEmployee(15, pathWithChoice));
+        }else{
+            System.out.println("Employee not found");
+        }
+
+
         }
 
     }

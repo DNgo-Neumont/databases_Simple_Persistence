@@ -158,5 +158,49 @@ public class FileReadWrite {
 
     }
 
+    public Employee GetSerializedEmployee(int id, String path){
+        File dirPath = new File(path);
+        File serializedPath = new File(dirPath.getParent() + "\\long serialized\\");
+        String[] fileList = serializedPath.list();
+
+        int[] splitString = new int[fileList.length];
+
+        for(int i = 0; i < fileList.length; i ++){
+            splitString[i] =Integer.valueOf(fileList[i].split(".ser")[0]);
+        }
+
+        Arrays.sort(splitString);
+
+        ArrayList<Employee> employeeList = new ArrayList<>();
+
+
+        for(int i = 0; i < fileList.length; i ++){
+
+            File currentFile = new File(serializedPath.getPath() + "\\" + splitString[i] +".ser");
+            try{
+                FileInputStream fileInputStream = new FileInputStream(currentFile);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                Employee newEmployee = (Employee) objectInputStream.readObject();
+
+                employeeList.add(newEmployee);
+                objectInputStream.close();
+                fileInputStream.close();
+            }catch(Exception e){
+                e.printStackTrace();
+            }
+        }
+
+        Employee employeeToReturn = null;
+
+        for(int i = 0; i < employeeList.size(); i++){
+            if(employeeList.get(i).getId() == id){
+                 employeeToReturn = employeeList.get(i);
+            }
+        }
+
+        return employeeToReturn;
+    }
+
 
 }
