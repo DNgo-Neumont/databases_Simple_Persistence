@@ -11,13 +11,14 @@ public class Main {
 
 	    if (choice > 0){
 
-        String pathWithChoice =path + "\\" + options[choice-1]+ "\\";
+        String pathWithChoice = path + "\\" + options[choice-1]+ "\\";
         FileReadWrite fileRead = new FileReadWrite();
         employeeAddition employeeAdder = new employeeAddition();
 
         fileRead.deserializeFromFile(pathWithChoice);
         fileRead.printPeopleDetails(pathWithChoice);
-        //fileRead.deleteEmployeeFrom(11, pathWithChoice); - Example
+        fileRead.deleteEmployeeFrom(11, pathWithChoice);
+
         employeeAdder.addEmployee("Wanda", "Simmons", 1994, pathWithChoice);
         employeeAdder.updateEmployee(10, "RANDALL", "MONTGOMERY", 2001, pathWithChoice);
 

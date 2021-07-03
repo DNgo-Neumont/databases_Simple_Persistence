@@ -14,7 +14,7 @@ public class employeeAddition {
         int[] splitString = new int[fileList.length];
 
         for(int i = 0; i < fileList.length; i ++){
-            splitString[i] =Integer.valueOf(fileList[i].split(".txt")[0]);
+            splitString[i] =Integer.parseInt(fileList[i].split(".txt")[0]);
         }
 
         Arrays.sort(splitString);
