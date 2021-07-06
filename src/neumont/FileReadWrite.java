@@ -5,13 +5,14 @@ import com.sun.corba.se.impl.orbutil.ObjectWriter;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class FileReadWrite {
 
     public void printPeopleDetails(String path) {
         File file = new File(path);
         String[] list = file.list();
-        if(list != null){
+        if (list != null) {
             for (int i = 0; i < list.length; i++) {
                 File readFile = new File(path + list[i]);
 
@@ -19,24 +20,24 @@ public class FileReadWrite {
                     BufferedReader fileReader = new BufferedReader(new FileReader(readFile));
                     System.out.println(fileReader.readLine());
                     fileReader.close();
-                }catch (IOException io){
+                } catch (IOException io) {
                     System.out.println("Something went wrong");
                 }
             }
 
-        }else{
+        } else {
             System.out.println("No employees found");
         }
 
     }
 
-    public void deserializeFromFile(String path){
+    public void deserializeFromFile(String path) {
         File file = new File(path);
         String[] list = file.list();
 
         String[] seperatedTerms;
 
-        if(list != null){
+        if (list != null) {
 
             for (int i = 0; i < list.length; i++) {
                 File readFile = new File(path + list[i]);
@@ -54,42 +55,42 @@ public class FileReadWrite {
                     System.out.println(newEmployee.toString());
 
                     fileReader.close();
-                }catch (IOException io){
+                } catch (IOException io) {
                     System.out.println("Something went wrong");
                 }
 
 
             }
-        }else{
+        } else {
             System.out.println("No files found");
         }
 
     }
 
-    public void deleteEmployeeFrom(int id, String path){
+    public void deleteEmployeeFrom(int id, String path) {
         File dirPath = new File(path);
         String[] fileList = dirPath.list();
 
         String[] fileContent = new String[4];
-        
-        for(int i = 0; i < fileList.length; i ++ ){
+
+        for (int i = 0; i < fileList.length; i++) {
             File currentFile = new File(path + fileList[i]);
-            try{
+            try {
                 BufferedReader fileReader = new BufferedReader(new FileReader(currentFile));
 
                 fileContent = fileReader.readLine().split(", ");
-                
+
                 fileReader.close();
-            }catch(FileNotFoundException fnf){
+            } catch (FileNotFoundException fnf) {
                 System.out.println(fnf.getMessage());
-            }catch(IOException ioe){
+            } catch (IOException ioe) {
                 System.out.println(ioe.getMessage());
             }
-            
-            if(Integer.parseInt(fileContent[0]) == id){
-                if(currentFile.delete()){
+
+            if (Integer.parseInt(fileContent[0]) == id) {
+                if (currentFile.delete()) {
                     System.out.println("File deleted");
-                }else{
+                } else {
                     System.out.println("Failed to delete file");
                 }
             }
@@ -99,22 +100,22 @@ public class FileReadWrite {
 
     }
 
-    public void serializeAllEmployees(String path){
+    public void serializeAllEmployees(String path) {
         File dirPath = new File(path);
         String[] fileList = dirPath.list();
 
         int[] splitString = new int[fileList.length];
 
-        for(int i = 0; i < fileList.length; i ++){
-            splitString[i] =Integer.valueOf(fileList[i].split(".txt")[0]);
+        for (int i = 0; i < fileList.length; i++) {
+            splitString[i] = Integer.valueOf(fileList[i].split(".txt")[0]);
         }
 
         Arrays.sort(splitString);
 
         ArrayList<Employee> readEmployees = new ArrayList<Employee>();
 
-        for(int i = 0; i < fileList.length; i ++){
-            try{
+        for (int i = 0; i < fileList.length; i++) {
+            try {
                 File currentFile = new File(path + splitString[i] + ".txt");
 
                 BufferedReader fileReader = new BufferedReader(new FileReader(currentFile));
@@ -126,7 +127,7 @@ public class FileReadWrite {
                 readEmployees.add(newEmployee);
 
                 fileReader.close();
-            }catch(IOException ioe){
+            } catch (IOException ioe) {
                 System.err.println(ioe.getMessage());
             }
         }
@@ -134,23 +135,23 @@ public class FileReadWrite {
         File upperDirectory = new File(dirPath.getParent());
         File longSerialized = new File(upperDirectory + "\\long serialized\\");
 
-        if(!longSerialized.exists()){
+        if (!longSerialized.exists()) {
             longSerialized.mkdir();
         }
 
-        for(int i = 0; i < readEmployees.size(); i ++){
+        for (int i = 0; i < readEmployees.size(); i++) {
             File currentFile = new File(longSerialized.getPath() + "\\" + readEmployees.get(i).getId() + ".ser");
 
-            try{
+            try {
                 FileOutputStream fileOutputStream = new FileOutputStream(currentFile.toString());
                 ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
                 objectOutputStream.writeObject(readEmployees.get(i));
 
                 objectOutputStream.close();
                 fileOutputStream.close();
-            }catch(FileNotFoundException fnf){
+            } catch (FileNotFoundException fnf) {
                 System.err.println(fnf.getMessage());
-            }catch(IOException ioe){
+            } catch (IOException ioe) {
                 System.err.println(ioe.getMessage());
             }
 
@@ -158,15 +159,15 @@ public class FileReadWrite {
 
     }
 
-    public Employee GetSerializedEmployee(int id, String path){
+    public Employee GetSerializedEmployee(int id, String path) {
         File dirPath = new File(path);
         File serializedPath = new File(dirPath.getParent() + "\\long serialized\\");
         String[] fileList = serializedPath.list();
 
         int[] splitString = new int[fileList.length];
 
-        for(int i = 0; i < fileList.length; i ++){
-            splitString[i] =Integer.valueOf(fileList[i].split(".ser")[0]);
+        for (int i = 0; i < fileList.length; i++) {
+            splitString[i] = Integer.valueOf(fileList[i].split(".ser")[0]);
         }
 
         Arrays.sort(splitString);
@@ -174,10 +175,10 @@ public class FileReadWrite {
         ArrayList<Employee> employeeList = new ArrayList<>();
 
 
-        for(int i = 0; i < fileList.length; i ++){
+        for (int i = 0; i < fileList.length; i++) {
 
-            File currentFile = new File(serializedPath.getPath() + "\\" + splitString[i] +".ser");
-            try{
+            File currentFile = new File(serializedPath.getPath() + "\\" + splitString[i] + ".ser");
+            try {
                 FileInputStream fileInputStream = new FileInputStream(currentFile);
                 ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
 
@@ -186,42 +187,91 @@ public class FileReadWrite {
                 employeeList.add(newEmployee);
                 objectInputStream.close();
                 fileInputStream.close();
-            }catch(Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
 
         Employee employeeToReturn = null;
 
-        for(int i = 0; i < employeeList.size(); i++){
-            if(employeeList.get(i).getId() == id){
-                 employeeToReturn = employeeList.get(i);
+        for (int i = 0; i < employeeList.size(); i++) {
+            if (employeeList.get(i).getId() == id) {
+                employeeToReturn = employeeList.get(i);
             }
         }
 
         return employeeToReturn;
     }
-            public void search(String path) {
-                ArrayList<String> pathways = new ArrayList<>();
-                {
-                pathways.add("large");
-                pathways.add("long");
-                pathways.add("simple");
-            }
-            for (int i = 0; i < pathways.size(); i++){
-                File Path = new File(path + pathways.get(i));
-                String[] fileList = Path.list();
 
-                for (int j = 0; j < fileList.length; j++)
-                {
+    public void search(String path) {
+        ArrayList<String> pathways = new ArrayList<>();
+        {
+            pathways.add("large");
+            pathways.add("long");
+            pathways.add("simple");
+        }
+
+        for (int i = 0; i < pathways.size(); i++) {
+            File Path = new File(path + pathways.get(i));
+            String[] fileList = Path.list();
+
+            for (int j = 0; j < fileList.length; j++) {
+
+            }
+        }
+
+    }
+
+    public void creatHashMap(String path) {
+        HashMap<Integer, Employee> objectAndID = new HashMap<>();
+        ArrayList<Employee> employees = new ArrayList<>();
+        ArrayList<Integer> ID = new ArrayList<>();
+        ArrayList<String> pathways = new ArrayList<>();
+        {
+            pathways.add("long");
+            pathways.add("simple");
+        }
+        for (int t = 0; t < pathways.size(); t++){
+
+        {
+            File file = new File(path +"\\" + pathways.get(t));
+            String[] list = file.list();
+
+            String[] seperatedTerms;
+
+            if (list != null) {
+
+                for (int i = 0; i < list.length; i++) {
+                    File readFile = new File(path +"\\" + pathways.get(t) + "\\" + list[i]);
+
+
+                    try {
+                        BufferedReader fileReader = new BufferedReader(new FileReader(readFile));
+
+                        String fileResult = fileReader.readLine();
+
+                        seperatedTerms = fileResult.split(", ");
+
+                        Employee newEmployee = new Employee(Integer.parseInt(seperatedTerms[0]), seperatedTerms[1], seperatedTerms[2], Integer.parseInt(seperatedTerms[3]));
+                        employees.add(newEmployee);
+                        ID.add(Integer.parseInt(seperatedTerms[0]));
+
+                        fileReader.close();
+                    } catch (IOException io) {
+                        System.out.println("Something went wrong");
+                    }
+
 
                 }
-
-
-
+            } else {
+                System.out.println("No files found");
             }
+        }
+        }
 
+        for (int i = 0; i < employees.size(); i++) {
+            objectAndID.put(ID.get(i), employees.get(i));
+        }
 
-            }
-
+    }
 }
