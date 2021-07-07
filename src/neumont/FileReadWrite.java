@@ -203,25 +203,6 @@ public class FileReadWrite {
         return employeeToReturn;
     }
 
-    public void search(String path) {
-        ArrayList<String> pathways = new ArrayList<>();
-        {
-            pathways.add("large");
-            pathways.add("long");
-            pathways.add("simple");
-        }
-
-        for (int i = 0; i < pathways.size(); i++) {
-            File Path = new File(path + pathways.get(i));
-            String[] fileList = Path.list();
-
-            for (int j = 0; j < fileList.length; j++) {
-
-            }
-        }
-
-    }
-
     public void creatHashMap(String path) {
         HashMap<Integer, Employee> objectAndID = new HashMap<>();
         ArrayList<Employee> employees = new ArrayList<>();
