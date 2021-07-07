@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="databases_Simple_Persistence:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/databases_Simple_Persistence_jar</output-path>
+    <root id="archive" name="databases_Simple_Persistence.jar">
+      <element id="module-output" name="databases_Simple_Persistence" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/src/ConsoleIO.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

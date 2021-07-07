@@ -1,5 +1,8 @@
 package neumont;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+
 public class LargeEmployee extends Employee {
     private byte[] someData;
 
@@ -22,6 +25,17 @@ public class LargeEmployee extends Employee {
         StringBuilder formatted = new StringBuilder();
 
         formatted.append("\n").append("Employee specific data");
+
+        BigInteger bigInt = new BigInteger(someData);
+
+        BigInteger shifted = bigInt.shiftRight(1);
+
+        byte[] shiftedBytes = shifted.toByteArray();
+
+        String ow = new String(shiftedBytes);
+
+        formatted.append("\n").append(ow);
+
 
         for(int i = 0; i < someData.length; i ++) {
             formatted.append("\n").append(someData[i]);

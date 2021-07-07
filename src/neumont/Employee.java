@@ -15,6 +15,8 @@ public class Employee implements Serializable {
         this.hireYear = hireYear;
     }
 
+    public Employee(){ }
+
     public void setId(int id){
         this.id = id;
     }
