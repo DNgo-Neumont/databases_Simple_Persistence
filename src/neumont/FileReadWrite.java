@@ -203,8 +203,8 @@ public class FileReadWrite {
         return employeeToReturn;
     }
 
-    public void creatHashMap(String path) {
-        HashMap<Integer, Employee> objectAndID = new HashMap<>();
+    public HashMap<Integer,Employee> creatHashMap(String path) {
+        HashMap<Integer, Employee> getAllEmployees = new HashMap<>();
         ArrayList<Employee> employees = new ArrayList<>();
         ArrayList<Integer> ID = new ArrayList<>();
         ArrayList<String> pathways = new ArrayList<>();
@@ -251,8 +251,22 @@ public class FileReadWrite {
         }
 
         for (int i = 0; i < employees.size(); i++) {
-            objectAndID.put(ID.get(i), employees.get(i));
+            getAllEmployees.put(ID.get(i), employees.get(i));
         }
 
+        return getAllEmployees;
+
     }
+
+
+   public void printAllEmployees(String path) {
+       HashMap<Integer,Employee> getAllEmployees = creatHashMap(path);
+
+
+       for (int i = 0; i < getAllEmployees.size(); i++){
+
+           System.out.println(getAllEmployees.get(i).toString());
+       }
+    }
+
 }
