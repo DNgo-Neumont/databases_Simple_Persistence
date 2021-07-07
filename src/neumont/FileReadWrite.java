@@ -1,11 +1,10 @@
 package neumont;
 
-import com.sun.corba.se.impl.orbutil.ObjectWriter;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 public class FileReadWrite {
 
@@ -52,7 +51,7 @@ public class FileReadWrite {
 
                     Employee newEmployee = new Employee(Integer.parseInt(seperatedTerms[0]), seperatedTerms[1], seperatedTerms[2], Integer.parseInt(seperatedTerms[3]));
 
-                    System.out.println(newEmployee.toString());
+                    System.out.println(newEmployee);
 
                     fileReader.close();
                 } catch (IOException io) {
@@ -81,10 +80,8 @@ public class FileReadWrite {
                 fileContent = fileReader.readLine().split(", ");
 
                 fileReader.close();
-            } catch (FileNotFoundException fnf) {
-                System.out.println(fnf.getMessage());
-            } catch (IOException ioe) {
-                System.out.println(ioe.getMessage());
+            } catch (Exception e){
+                System.err.println(e.getMessage());
             }
 
             if (Integer.parseInt(fileContent[0]) == id) {
@@ -107,12 +104,12 @@ public class FileReadWrite {
         int[] splitString = new int[fileList.length];
 
         for (int i = 0; i < fileList.length; i++) {
-            splitString[i] = Integer.valueOf(fileList[i].split(".txt")[0]);
+            splitString[i] = Integer.parseInt(fileList[i].split(".txt")[0]);
         }
 
         Arrays.sort(splitString);
 
-        ArrayList<Employee> readEmployees = new ArrayList<Employee>();
+        ArrayList<Employee> readEmployees = new ArrayList<>();
 
         for (int i = 0; i < fileList.length; i++) {
             try {
@@ -149,10 +146,8 @@ public class FileReadWrite {
 
                 objectOutputStream.close();
                 fileOutputStream.close();
-            } catch (FileNotFoundException fnf) {
-                System.err.println(fnf.getMessage());
-            } catch (IOException ioe) {
-                System.err.println(ioe.getMessage());
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
             }
 
         }
@@ -167,7 +162,7 @@ public class FileReadWrite {
         int[] splitString = new int[fileList.length];
 
         for (int i = 0; i < fileList.length; i++) {
-            splitString[i] = Integer.valueOf(fileList[i].split(".ser")[0]);
+            splitString[i] = Integer.parseInt(fileList[i].split(".ser")[0]);
         }
 
         Arrays.sort(splitString);
@@ -203,7 +198,138 @@ public class FileReadWrite {
         return employeeToReturn;
     }
 
-    public HashMap<Integer,Employee> creatHashMap(String path) {
+
+    public void GetSerializedEmployee(String path) {
+        File dirPath = new File(path);
+        File serializedPath = new File(dirPath.getParent() + "\\long serialized\\");
+        String[] fileList = serializedPath.list();
+
+        int[] splitString = new int[fileList.length];
+
+        for (int i = 0; i < fileList.length; i++) {
+            splitString[i] = Integer.parseInt(fileList[i].split(".ser")[0]);
+        }
+
+        Arrays.sort(splitString);
+
+        for (int i = 0; i < fileList.length; i++) {
+
+            File currentFile = new File(serializedPath.getPath() + "\\" + splitString[i] + ".ser");
+            try {
+                FileInputStream fileInputStream = new FileInputStream(currentFile);
+                ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+
+                Employee newEmployee = (Employee) objectInputStream.readObject();
+                System.out.println(newEmployee);
+
+                objectInputStream.close();
+                fileInputStream.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+        public Employee findEmployee(int id){
+        File dirPath = new File("C:\\Users\\dngo\\OneDrive - Neumont College of Computer Science\\Neumont\\Quarter 4\\DBT230\\people\\long");
+        String[] fileList = dirPath.list();
+
+        int[] splitString = new int[fileList.length];
+
+        for (int i = 0; i < fileList.length; i++) {
+            splitString[i] = Integer.parseInt(fileList[i].split(".txt")[0]);
+        }
+
+        Arrays.sort(splitString);
+
+        Employee matchingEmployee = null;
+
+        for(int i = 0; i < fileList.length; i ++){
+
+            try{
+               BufferedReader reader = new BufferedReader(new FileReader(dirPath + "\\" + splitString[i] + ".txt"));
+               String[] fileContents = reader.readLine().split(", ");
+
+               if(Integer.parseInt(fileContents[0]) == id){
+                   matchingEmployee = new Employee(Integer.parseInt(fileContents[0]), fileContents[1], fileContents[2], Integer.parseInt(fileContents[3]));
+                   break;
+               }
+
+            }catch(Exception e){
+                System.err.println(e.getMessage());
+            }
+        }
+        return matchingEmployee;
+    }
+
+    public Employee findEmployee(String lastName){
+        File dirPath = new File("C:\\Users\\dngo\\OneDrive - Neumont College of Computer Science\\Neumont\\Quarter 4\\DBT230\\people\\long");
+        String[] fileList = dirPath.list();
+
+        int[] splitString = new int[fileList.length];
+
+        for (int i = 0; i < fileList.length; i++) {
+            splitString[i] = Integer.parseInt(fileList[i].split(".txt")[0]);
+        }
+
+        Arrays.sort(splitString);
+
+        Employee matchingEmployee = null;
+
+        for(int i = 0; i < fileList.length; i ++){
+
+            try{
+                BufferedReader reader = new BufferedReader(new FileReader(dirPath + "\\" + splitString[i] + ".txt"));
+                String[] fileContents = reader.readLine().split(", ");
+
+                if(fileContents[2].equalsIgnoreCase(lastName)){
+                    matchingEmployee = new Employee(Integer.parseInt(fileContents[0]), fileContents[1], fileContents[2], Integer.parseInt(fileContents[3]));
+                    break;
+                }
+
+            }catch(Exception e){
+                System.err.println(e.getMessage());
+            }
+        }
+        return matchingEmployee;
+    }
+
+    public List<Employee> findAllEmployeesByLastName(String lastName){
+        File dirPath = new File("C:\\Users\\dngo\\OneDrive - Neumont College of Computer Science\\Neumont\\Quarter 4\\DBT230\\people\\long");
+        String[] fileList = dirPath.list();
+
+        int[] splitString = new int[fileList.length];
+
+        for (int i = 0; i < fileList.length; i++) {
+            splitString[i] = Integer.parseInt(fileList[i].split(".txt")[0]);
+        }
+
+        Arrays.sort(splitString);
+
+        List<Employee> employeeList = new ArrayList<>();
+
+        for(int i = 0; i < fileList.length; i ++){
+
+            try{
+                BufferedReader reader = new BufferedReader(new FileReader(dirPath + "\\" + splitString[i] + ".txt"));
+                String[] fileContents = reader.readLine().split(", ");
+
+                Employee matchingEmployee = new Employee(Integer.parseInt(fileContents[0]), fileContents[1], fileContents[2], Integer.parseInt(fileContents[3]));
+
+                if(matchingEmployee.getLastName().equalsIgnoreCase(lastName)){
+                    employeeList.add(matchingEmployee);
+                }
+
+            }catch(Exception e){
+                System.err.println(e.getMessage());
+            }
+        }
+        return employeeList;
+    }
+
+
+    public HashMap<Integer,Employee> createHashMap(String path) {
         HashMap<Integer, Employee> getAllEmployees = new HashMap<>();
         ArrayList<Employee> employees = new ArrayList<>();
         ArrayList<Integer> ID = new ArrayList<>();
@@ -214,17 +340,25 @@ public class FileReadWrite {
         }
         for (int t = 0; t < pathways.size(); t++){
 
-        {
+
             File file = new File(path +"\\" + pathways.get(t));
             String[] list = file.list();
+
+            int[] splitString = new int[list.length];
+
+            for (int i = 0; i < list.length; i++) {
+                splitString[i] = Integer.parseInt(list[i].split(".txt")[0]);
+            }
+
+            Arrays.sort(splitString);
+
 
             String[] seperatedTerms;
 
             if (list != null) {
 
                 for (int i = 0; i < list.length; i++) {
-                    File readFile = new File(path +"\\" + pathways.get(t) + "\\" + list[i]);
-
+                    File readFile = new File(path +"\\" + pathways.get(t) + "\\" + splitString[i] + ".txt");
 
                     try {
                         BufferedReader fileReader = new BufferedReader(new FileReader(readFile));
@@ -241,13 +375,10 @@ public class FileReadWrite {
                     } catch (IOException io) {
                         System.out.println("Something went wrong");
                     }
-
-
                 }
             } else {
                 System.out.println("No files found");
             }
-        }
         }
 
         for (int i = 0; i < employees.size(); i++) {
@@ -258,14 +389,14 @@ public class FileReadWrite {
 
     }
 
-
    public void printAllEmployees(String path) {
-       HashMap<Integer,Employee> getAllEmployees = creatHashMap(path);
+       HashMap<Integer,Employee> getAllEmployees = createHashMap(path);
 
 
-       for (int i = 0; i < getAllEmployees.size(); i++){
-
-           System.out.println(getAllEmployees.get(i).toString());
+       for (int i = 1; i < getAllEmployees.size(); i++){
+            if(getAllEmployees.get(i) != null) {
+                System.out.println(getAllEmployees.get(i).toString());
+            }
        }
     }
 
