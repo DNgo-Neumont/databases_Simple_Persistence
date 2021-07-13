@@ -35,6 +35,8 @@ public class ConsoleIO {
             
             
            //chicken nugget
+            
+            System.out.println("hi");
 
             return input;
         } else {
