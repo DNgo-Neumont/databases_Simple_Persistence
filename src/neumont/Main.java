@@ -6,6 +6,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+    	//Done!
         String[] options = {"long","simple"};
 
         String path = ConsoleIO.promptForString("input Path to folder: ");
@@ -16,7 +17,23 @@ public class Main {
         employeeAddition employeeAdder = new employeeAddition();
         fileRead.createHashMap(path);
 
-
+        mongoDBInterface mInterface = new mongoDBInterface();
+        
+        mInterface.writeRecords(path);
+        
+        mInterface.updateDocument(22, "KALEY", "SANDIEGO");
+        
+        System.out.println(mInterface.findRecord("MABEL", "HUBBARD").toString());
+        
+        System.out.println(mInterface.findRecord(20).toString());
+        
+        mInterface.deleteSingleRecord(10000);
+        
+        mInterface.deleteRecords("Wanda");
+        
+        mInterface.insertRecord(50000, "TEST01", "REMOVEWHENDONE", 2021);
+        
+        /*
          if (choice > 0){
 
              System.out.println("Hash Map readThrough");
@@ -66,6 +83,7 @@ public class Main {
             }
 
          }
+         */
 
     }
 
